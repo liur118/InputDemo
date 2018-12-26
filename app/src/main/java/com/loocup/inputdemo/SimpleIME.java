@@ -23,16 +23,36 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
         InputConnection ic = getCurrentInputConnection();
         playClick(primaryCode);
         switch(primaryCode){
-            case Keyboard.KEYCODE_DELETE :
+            case -5 :
                 ic.deleteSurroundingText(1, 0);
                 break;
-            case Keyboard.KEYCODE_SHIFT:
+            case -1:
                 caps = !caps;
                 keyboard.setShifted(caps);
                 kv.invalidateAllKeys();
                 break;
-            case Keyboard.KEYCODE_DONE:
+            case -4:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
+                break;
+            case -6:
+                // 上
+                Log.i(TAG, "-6");
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_UP, -6));
+                break;
+            case -7:
+                // 下
+                Log.i(TAG, "-7");
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_DOWN, -7));
+                break;
+            case -8:
+                // 左
+                Log.i(TAG, "-8");
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT, -8));
+                break;
+            case -9:
+                // 右
+                Log.i(TAG, "-9");
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.KEYCODE_SYSTEM_NAVIGATION_RIGHT, -9));
                 break;
             default:
                 char code = (char)primaryCode;
@@ -69,6 +89,11 @@ public class SimpleIME extends InputMethodService implements KeyboardView.OnKeyb
 
     @Override
     public void swipeUp() {
+    }
+
+    @Override
+    public View onCreateCandidatesView() {
+        return super.onCreateCandidatesView();
     }
 
     @Override
